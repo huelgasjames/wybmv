@@ -1,0 +1,233 @@
+
+\<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Invite 💘</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffd6e8, #fff0f6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.card {
+    background: white;
+    width: 95%;
+    max-width: 420px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+}
+
+h1 {
+    color: #ff3366;
+}
+
+p {
+    color: #555;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 15px;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+.buttons {
+    position: relative;
+    height: 140px;
+    margin-top: 25px;
+}
+
+#yesBtn {
+    background: #ff3366;
+    color: white;
+    width: 45%;
+    position: absolute;
+    left: 5%;
+    bottom: 0;
+}
+
+#noBtn {
+    background: white;
+    color: #ff3366;
+    border: 2px solid #ff3366;
+    width: 45%;
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+/* CONFETTI */
+.confetti {
+    position: fixed;
+    top: -10px;
+    width: 8px;
+    height: 14px;
+    opacity: 0.9;
+    pointer-events: none;
+    animation: confetti-fall 4s linear forwards;
+}
+
+@keyframes confetti-fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 22px; }
+    p { font-size: 16px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+
+<!-- PAGE 1 -->
+<div id="page1">
+    <h1>Hi 💖</h1>
+    <p>Can I get your name?</p>
+    <input type="text" id="nameInput" placeholder="Your name here">
+    <button onclick="goNext()">Continue</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="hidden">
+    <h1 id="hiName"></h1>
+
+    <p>When are you free?</p>
+    <input type="date" id="datePicker">
+
+    <p>Pick your drink ☕</p>
+    <select>
+        <option>Coffee</option>
+        <option>Tea</option>
+        <option>I prefer making our own drinks</option>
+    </select>
+
+    <p>Pick your food 🍜</p>
+    <select>
+        <option>Takoyaki</option>
+        <option>Shawarma</option>
+        <option>Ramen</option>
+        <option>Lugaw Date</option>
+        <option>Anything basta masaya tayo</option>
+    </select>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 😳</button>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="hidden">
+    <h1>YAYYYYY 🎉💘</h1>
+    <p>Thank you for saying YES 🥹</p>
+    <p>Kaya mag-msg ka na sa Facebook ko 💌</p>
+    <button onclick="openFB()">Open Facebook</button>
+</div>
+
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const card = document.getElementById("card");
+
+/* PAGE TRANSITION */
+function goNext() {
+    const name = document.getElementById("nameInput").value;
+    if (!name) return alert("Please enter your name 💕");
+
+    document.getElementById("hiName").innerText = "Hi " + name + " 💖";
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.remove("hidden");
+}
+
+/* FEB 14 ONLY */
+document.getElementById("datePicker").addEventListener("input", e => {
+    const d = new Date(e.target.value);
+    if (!(d.getMonth() === 1 && d.getDate() === 14)) {
+        alert("Feb 14 lang pwede 😌💘");
+        e.target.value = "";
+    }
+});
+
+/* NO BUTTON RUNS FOREVER */
+function moveNo() {
+    const rect = card.getBoundingClientRect();
+    const maxX = rect.width - noBtn.offsetWidth;
+    const maxY = rect.height - noBtn.offsetHeight;
+
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+}
+
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("click", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* YES BUTTON */
+yesBtn.addEventListener("click", () => {
+    launchConfetti();
+    document.getElementById("page2").classList.add("hidden");
+    document.getElementById("page3").classList.remove("hidden");
+});
+
+/* CONFETTI FIXED */
+function launchConfetti() {
+    for (let i = 0; i < 120; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.backgroundColor =
+            `hsl(${Math.random() * 360},100%,70%)`;
+
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 4000);
+    }
+}
+
+/* FACEBOOK */
+function openFB() {
+    window.open("https://www.facebook.com/hlgs.jms", "_blank");
+}
+</script>
+
+</body>
+</html>

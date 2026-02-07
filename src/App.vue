@@ -104,7 +104,7 @@
         <div class="space-y-3 sm:space-y-4">
           <h1 class="text-3xl sm:text-4xl font-bold text-valentine-pink animate-bounce">YAYYYYY 🎉💘</h1>
           <p class="text-gray-600 text-base sm:text-lg">Thank you for saying YES 🥹</p>
-          <p class="text-gray-600 text-sm sm:text-base">Kaya mag-msg mo na ko 💌</p>
+          <p class="text-gray-600 text-sm sm:text-base">Kaya msg mo na ko 💌</p>
         </div>
         
         <div class="space-y-3 sm:space-y-4">
